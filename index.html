@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landslide AI Risk Predictor</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #07111f;
+            color: white;
+        }
+
+        .header {
+            padding: 22px 7%;
+            border-bottom: 1px solid #26364a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .badge {
+            padding: 8px 14px;
+            border: 1px solid #334155;
+            border-radius: 20px;
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 55px 20px 35px;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 14px;
+        }
+
+        .hero h1 span {
+            color: #38bdf8;
+        }
+
+        .hero p {
+            color: #94a3b8;
+            font-size: 16px;
+        }
+
+        .dashboard {
+            max-width: 1050px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: #0d1b2a;
+            border: 1px solid #26364a;
+            border-radius: 18px;
+            padding: 28px;
+        }
+
+        .card h2 {
+            margin-bottom: 8px;
+        }
+
+        .card-description {
+            color: #94a3b8;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 13px;
+            background: #07111f;
+            border: 1px solid #334155;
+            border-radius: 9px;
+            color: white;
+            outline: none;
+        }
+
+        .input-group input:focus {
+            border-color: #38bdf8;
+        }
+
+        .predict-btn {
+            width: 100%;
+            margin-top: 25px;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: #0284c7;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .predict-btn:hover {
+            background: #0369a1;
+        }
+
+        #result {
+            display: none;
+            margin-top: 25px;
+            padding: 28px;
+            border-radius: 15px;
+            background: #07111f;
+            border: 1px solid #334155;
+            text-align: center;
+        }
+
+        .result-title {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        .score {
+            font-size: 52px;
+            font-weight: bold;
+            margin: 8px 0;
+            color: #38bdf8;
+        }
+
+        .level {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .info-grid {
+            margin-top: 25px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .info-box {
+            padding: 18px;
+            background: #0d1b2a;
+            border: 1px solid #26364a;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .info-box strong {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .info-box span {
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 35px 20px;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        @media (max-width: 700px) {
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="logo">🌋 Landslide AI</div>
+    <div class="badge">AI Risk Assessment</div>
+</header>
+
+<section class="hero">
+    <h1>Landslide <span>Risk Predictor</span></h1>
+    <p>Predict landslide risk using environmental and terrain conditions.</p>
+</section>
+
+<main class="dashboard">
+
+    <div class="card">
+
+        <h2>Environmental Parameters</h2>
+        <p class="card-description">
+            Enter the current environmental conditions to calculate the landslide risk.
+        </p>
+
+        <div class="form-grid">
+
+            <div class="input-group">
+                <label>Rainfall</label>
+                <input type="number" id="rainfall" placeholder="e.g. 180">
+            </div>
+
+            <div class="input-group">
+                <label>Soil Moisture</label>
+                <input type="number" id="soil_moisture" placeholder="e.g. 90">
+            </div>
+
+            <div class="input-group">
+                <label>Slope</label>
+                <input type="number" id="slope" placeholder="e.g. 45">
+            </div>
+
+            <div class="input-group">
+                <label>Elevation</label>
+                <input type="number" id="elevation" placeholder="e.g. 1200">
+            </div>
+
+            <div class="input-group">
+                <label>Temperature</label>
+                <input type="number" id="temperature" placeholder="e.g. 22">
+            </div>
+
+            <div class="input-group">
+                <label>Humidity</label>
+                <input type="number" id="humidity" placeholder="e.g. 90">
+            </div>
+
+            <div class="input-group">
+                <label>Previous Landslide</label>
+                <input type="number" id="previous_landslide"
+                       min="0" max="1" placeholder="0 = No, 1 = Yes">
+            </div>
+
+        </div>
+
+        <button class="predict-btn" onclick="predictRisk()">
+            Predict Landslide Risk
+        </button>
+
+        <div id="result">
+
+            <div class="result-title">Predicted Risk Score</div>
+
+            <div class="score" id="riskScore">
+                0
+            </div>
+
+            <div class="level" id="riskLevel">
+                -
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="info-grid">
+
+        <div class="info-box">
+            <strong>🌧️</strong>
+            <span>Rainfall Analysis</span>
+        </div>
+
+        <div class="info-box">
+            <strong>💧</strong>
+            <span>Soil Moisture</span>
+        </div>
+
+        <div class="info-box">
+            <strong>⛰️</strong>
+            <span>Terrain Factors</span>
+        </div>
+
+        <div class="info-box">
+            <strong>🤖</strong>
+            <span>ML Prediction</span>
+        </div>
+
+    </div>
+
+</main>
+
+<footer>
+    Landslide AI Risk Prediction System • Machine Learning Prototype
+</footer>
+
+<script>
+
+async function predictRisk() {
+
+    const data = {
+        rainfall: Number(document.getElementById("rainfall").value),
+        soil_moisture: Number(document.getElementById("soil_moisture").value),
+        slope: Number(document.getElementById("slope").value),
+        elevation: Number(document.getElementById("elevation").value),
+        temperature: Number(document.getElementById("temperature").value),
+        humidity: Number(document.getElementById("humidity").value),
+        previous_landslide: Number(
+            document.getElementById("previous_landslide").value
+        )
+    };
+
+    const response = await fetch("/predict", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    });
+
+    const result = await response.json();
+
+    document.getElementById("result").style.display = "block";
+
+    document.getElementById("riskScore").innerText =
+        result.risk_score + " / 100";
+
+    document.getElementById("riskLevel").innerText =
+        result.risk_level;
+}
+
+</script>
+
+</body>
+</html>
